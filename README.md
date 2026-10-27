@@ -1,73 +1,63 @@
-# Parcial II - Programacion
+# ⚔️ Parcial II - Programación II (G411)
 
 **Autor:** Alexis
 **Programa:** Tecnología en Sistemas de Información
 
-## Descripción
+## 📖 Descripción
 
-Juego de batallas entre criaturas desarrollado en Java, aplicando **polimorfismo** y **clases abstractas**. Cada criatura tiene su propia forma de atacar y de defenderse.
+Juego de batallas entre criaturas en Java, aplicando **polimorfismo** y **clases abstractas**. Cada criatura ataca y se defiende de forma distinta.
 
-## Estructura del proyecto
+## 📁 Estructura
 
 ```
-├── Criatura.java    (clase abstracta)
-├── Dragon.java      (subclase)
-├── Mago.java        (subclase)
-├── Guerrero.java    (subclase)
-└── Main.java        (simulación de batallas y clase principal)
+├── Arma.java
+├── Criatura.java   (clase abstracta)
+├── Dragon.java
+├── Mago.java
+├── Guerrero.java
+└── Main.java
 ```
 
-## Cómo se creó cada clase
+## 🛠️ Cómo se creó cada clase
 
-### 1. `Criatura` (clase abstracta)
+### 🧬 `Criatura` (abstracta)
+- Atributos `protected`: `nombre`, `salud`, `fuerza`.
+- Métodos abstractos: `atacar(Criatura objetivo)` y `defender(int daño)`.
+- Método concreto: `estaViva()` (`salud > 0`).
 
-Es la clase base de todas las criaturas. Se declaró como `abstract` para que no se pueda instanciar directamente y sirva solo como molde.
+### 🐉 `Dragon`
+- `atacar`: daño de `fuerza * 2`.
+- `defender`: las escamas reducen el daño en 25 %.
 
-- **Atributos:** `nombre`, `salud` y `fuerza`, declarados `protected` para que las subclases accedan a ellos directamente.
-- **Constructor:** recibe y asigna los tres atributos.
-- **Métodos abstractos:** `atacar(Criatura objetivo)` y `defender(int daño)`. No tienen cuerpo; cada subclase está obligada a implementarlos a su manera.
-- **Método concreto:** `estaViva()`, que devuelve `true` si `salud > 0`. Se escribió una sola vez porque la regla es igual para todas.
-- **Getters:** `getNombre()`, `getSalud()` y `getFuerza()`, necesarios para mostrar información durante la batalla.
+### 🧙 `Mago`
+- `atacar`: hechizo con daño igual a `fuerza`.
+- `defender`: escudo mágico que absorbe un tercio del daño.
 
-### 2. `Dragon`
+### 🛡️ `Guerrero`
+- `atacar`: golpe de espada con daño igual a `fuerza`.
+- `defender`: el escudo reduce el daño en 20 %.
 
-Hereda de `Criatura` con `extends` y llama al constructor padre con `super(...)`.
+### 🎮 `Main`
+- `simularBatalla(c1, c2)`: repite rondas hasta que una criatura muere, mostrando cada ataque, la salud y el ganador.
+- `main`: simula tres batallas entre criaturas distintas.
 
-- **`atacar`:** lanza una llamarada con un daño de `fuerza * 2` (el ataque más fuerte) y llama a `objetivo.defender(daño)`.
-- **`defender`:** sus escamas reducen el daño recibido en un 25 %. La salud nunca baja de 0.
+## 🗡️ Cómo se agregó la funcionalidad de armas
 
-### 3. `Mago`
+1. **Se creó la clase `Arma`** con `nombre` y `bonusDaño`, más sus getters.
+2. **Se agregó el atributo `arma` en `Criatura`**, junto con el método `equiparArma(Arma arma)`.
+3. **Se creó `getBonusArma()` en `Criatura`**: devuelve el bonus del arma, o 0 si no tiene.
+4. **Se modificó `atacar` en cada subclase** para sumar el bonus al daño:
+   ```java
+   int daño = fuerza + getBonusArma();
+   ```
+5. **En `Main` se equiparon armas** antes de pelear:
+   ```java
+   mago1.equiparArma(new Arma("Bastón arcano", 5));
+   ```
 
-Hereda de `Criatura`.
+Como `arma` está en la clase padre, todas las criaturas pueden usarla sin repetir código.
 
-- **`atacar`:** ataca con hechizos, con un daño igual a `fuerza`.
-- **`defender`:** crea un escudo mágico que absorbe un tercio del daño. La salud nunca baja de 0.
-
-### 4. `Guerrero`
-
-Hereda de `Criatura`.
-
-- **`atacar`:** golpea con su espada, con un daño igual a `fuerza`.
-- **`defender`:** se cubre con su escudo, que reduce el daño en un 20 %. La salud nunca baja de 0.
-
-### 5. `Main` (simulación de batallas)
-
-- **`simularBatalla(Criatura c1, Criatura c2)`:** muestra a los combatientes y repite rondas mientras ambos estén vivos. En cada ronda `c1` ataca a `c2` y, si `c2` sobrevive, contraataca. Al final de cada ronda imprime la salud de ambos y, cuando una criatura muere, muestra el ganador, las rondas jugadas y su salud restante.
-- **`main`:** crea criaturas nuevas para cada combate y simula tres batallas: Dragón vs Mago, Guerrero vs Dragón y Mago vs Guerrero.
-
-## Polimorfismo en acción
-
-Las variables se declaran del tipo `Criatura`, pero guardan objetos de las subclases:
-
-```java
-Criatura dragon = new Dragon("Smaug", 150, 15);
-Criatura mago = new Mago("Merlín", 100, 25);
-dragon.atacar(mago);
-```
-
-Al llamar a `atacar` o `defender`, Java ejecuta la versión de la clase real del objeto. Por eso `simularBatalla` funciona con cualquier criatura sin saber de qué tipo es.
-
-## Cómo ejecutarlo
+## ▶️ Cómo ejecutarlo
 
 ```bash
 javac -encoding UTF-8 *.java
