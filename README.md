@@ -10,31 +10,38 @@ Juego de batallas entre criaturas en Java, usando polimorfismo y clases abstract
 ## 🛠️ Cómo se creó cada clase
 
 ### 🧬 Criatura (abstracta)
-- Atributos: nombre, salud y fuerza.
-- Métodos abstractos: atacar y defender.
-- Método concreto: estaViva (salud > 0).
+- Se declaró con la palabra abstract, así que no se puede instanciar directamente.
+- Atributos protected: nombre (String), salud (int) y fuerza (int), para que las subclases accedan a ellos.
+- Constructor que recibe y asigna los tres atributos.
+- Métodos abstractos sin cuerpo: atacar(Criatura objetivo) y defender(int daño). Cada subclase está obligada a implementarlos.
+- Método concreto estaViva(): devuelve true si salud > 0.
+- Getters: getNombre, getSalud y getFuerza.
 
 ### 🐉 Dragon
-- Ataca con fuerza * 2.
-- Sus escamas reducen el daño en 25 %.
+- Hereda de Criatura con extends y llama al constructor padre con super(nombre, salud, fuerza).
+- atacar: calcula el daño como fuerza * 2, imprime el ataque y llama a objetivo.defender(daño).
+- defender: resta 25 % del daño (daño - daño / 4) por sus escamas, descuenta el resultado de la salud y evita que baje de 0.
 
 ### 🧙 Mago
-- Ataca con hechizos (fuerza).
-- Su escudo mágico absorbe un tercio del daño.
+- Hereda de Criatura y usa super para el constructor.
+- atacar: lanza un hechizo con daño igual a fuerza, lo imprime y llama a objetivo.defender(daño).
+- defender: su escudo mágico absorbe un tercio del daño (daño - daño / 3). Descuenta el resultado de la salud sin bajar de 0.
 
 ### 🛡️ Guerrero
-- Ataca con su espada (fuerza).
-- Su escudo reduce el daño en 20 %.
+- Hereda de Criatura y usa super para el constructor.
+- atacar: golpea con su espada con daño igual a fuerza y llama a objetivo.defender(daño).
+- defender: su escudo reduce el daño en 20 % (daño - daño / 5). Descuenta el resultado de la salud sin bajar de 0.
 
 ### 🎮 Main
-- simularBatalla: repite rondas hasta que una criatura muere, mostrando cada ataque, la salud y el ganador.
-- main: crea las criaturas y simula tres batallas.
+- simularBatalla(c1, c2): muestra a los dos combatientes y repite rondas con un while mientras ambos estén vivos. En cada ronda c1 ataca a c2 y, si c2 sigue viva, contraataca. Al final de cada ronda imprime la salud de ambos.
+- Cuando una muere, imprime el ganador, las rondas jugadas y su salud restante.
+- main: crea criaturas nuevas para cada combate (Dragon vs Mago, Guerrero vs Dragon y Mago vs Guerrero) y llama a simularBatalla.
 
 ## 🗡️ Cómo se agregó la funcionalidad de armas
 
-1. Se creó la clase Arma con nombre y bonusDaño.
-2. Se agregó el atributo arma en Criatura y el método equiparArma.
-3. Se creó getBonusArma, que devuelve el bonus del arma o 0 si no tiene.
+1. Se creó la clase Arma con nombre y bonusDaño, más sus getters.
+2. Se agregó el atributo arma en Criatura y el método equiparArma(Arma arma).
+3. Se creó getBonusArma en Criatura: devuelve el bonus del arma o 0 si no tiene.
 4. En atacar de cada subclase se suma el bonus al daño:
    ```java
    int daño = fuerza + getBonusArma();
