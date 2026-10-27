@@ -25,7 +25,7 @@ La clase Mago también hereda de Criatura. Su método atacar lanza un hechizo co
 
 La clase Guerrero hereda de Criatura. En atacar golpea con su espada con daño igual a fuerza y llama a objetivo.defender(daño). En defender, su escudo reduce el daño en un 20 % (daño - daño / 5), y el resultado se descuenta de la salud sin bajar de 0.
 
-### 🎮 Main
+### 🏟️ Main
 
 La clase Main tiene el método simularBatalla(c1, c2), que muestra a los dos combatientes y repite rondas con un while mientras ambos estén vivos. En cada ronda c1 ataca a c2 y, si c2 sigue viva, contraataca; al final de la ronda imprime la salud de ambos. Cuando una muere, imprime el ganador, las rondas jugadas y su salud restante. El método main crea criaturas nuevas para cada combate (Dragon vs Mago, Guerrero vs Dragon y Mago vs Guerrero) y llama a simularBatalla.
 
