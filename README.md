@@ -29,7 +29,6 @@ La clase Guerrero hereda de Criatura. En atacar golpea con su espada con daño i
 
 La clase Main tiene el método simularBatalla(c1, c2), que muestra a los dos combatientes y repite rondas con un while mientras ambos estén vivos. En cada ronda c1 ataca a c2 y, si c2 sigue viva, contraataca; al final de la ronda imprime la salud de ambos. Cuando una muere, imprime el ganador, las rondas jugadas y su salud restante. El método main crea criaturas nuevas para cada combate (Dragon vs Mago, Guerrero vs Dragon y Mago vs Guerrero) y llama a simularBatalla.
 
-## 🗡️ Cómo se agregó la funcionalidad de armas
 
 
 
