@@ -31,14 +31,8 @@ La clase Main tiene el método simularBatalla(c1, c2), que muestra a los dos com
 
 ## 🗡️ Cómo se agregó la funcionalidad de armas
 
-Primero se creó la clase Arma con los atributos nombre y bonusDaño y sus getters. Luego se agregó en Criatura el atributo arma, el método equiparArma(Arma arma) y el método getBonusArma, que devuelve el bonus del arma o 0 si la criatura no tiene. Después, en el método atacar de cada subclase se suma ese bonus al daño, por ejemplo:
 
-```java
-int daño = fuerza + getBonusArma();
-```
 
-Por último, en Main se equiparon armas antes de las batallas:
+## 🗡️ Cómo se agregó la funcionalidad de armas
 
-```java
-mago1.equiparArma(new Arma("Bastón arcano", 5));
-```
+Primero se creó la clase Arma, que guarda el nombre del arma y el daño extra que aporta (bonusDaño), con sus getters. Luego se modificó la clase Criatura: se le agregó el atributo arma, el método equiparArma para asignarle un arma a una criatura y el método getBonusArma, que devuelve el daño extra del arma o 0 si la criatura no tiene ninguna. Después, en el método atacar de Dragon, Mago y Guerrero, se suma ese bonus al daño base, así que cada criatura hace más daño según el arma que lleve. Como el atributo y los métodos están en la clase padre, las tres subclases los usan sin repetir código. Por último, en Main se equiparon armas a algunas criaturas antes de las batallas, como el bastón arcano del mago y la espada larga del guerrero.
